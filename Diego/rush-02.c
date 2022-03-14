@@ -6,39 +6,39 @@
 /*   By: dluna-lo <dluna-lo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 21:31:10 by dluna-lo          #+#    #+#             */
-/*   Updated: 2022/03/13 19:49:16 by dluna-lo         ###   ########.fr       */
+/*   Updated: 2022/03/13 21:09:18 by dluna-lo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <fcntl.h>
 
-// string.c
-char	*ft_get_file(int fildes);
-
-// main_logic.
+char	*ft_get_file(int fildes, int i, char *name_file);
 void	ft_main_logic(char *num, char *dict);
+int    ft_cheak(char *str);
 
 int	main(int argc, char **argv)
 {
-	int		fildes;
-	char	*k;
-	char	*name;
-	int		i;
+	int		archive;
+	char	*p;
 
-	i = 0;
-	if (argc >= 2 && argc <= 3)
+	if ((argc >= 2 && argc <= 3)&& ft_cheak(argv[1]))
 	{
 		if (argc == 3)
 		{
-			fildes = open(argv[2], O_RDONLY);
+			archive = open(argv[2], O_RDONLY);
+			p = ft_get_file(archive, 1, argv[2]);
 		}
 		else
 		{
-			fildes = open("numbers.dict", O_RDONLY);
+			archive = open("numbers.dict", O_RDONLY);
+			p = ft_get_file(archive, 0, argv[1]);
 		}
-		k = ft_get_file(fildes);
-		ft_main_logic(argv[1], k);
+		ft_main_logic(argv[1], p);
+	}
+	else
+	{
+		write(1, "Dict Error", 10);
 	}
 	write(1, "\n", 1);
 }

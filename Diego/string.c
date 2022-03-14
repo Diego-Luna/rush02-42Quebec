@@ -6,7 +6,7 @@
 /*   By: dluna-lo <dluna-lo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 13:18:53 by dluna-lo          #+#    #+#             */
-/*   Updated: 2022/03/13 20:04:49 by dluna-lo         ###   ########.fr       */
+/*   Updated: 2022/03/13 21:40:02 by dluna-lo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_get_file(int fildes)
+char	*ft_get_file(int fildes, int i, char *name_file)
 {
 	int		total;
 	char	tempbuf[64];
@@ -42,13 +42,18 @@ char	*ft_get_file(int fildes)
 	}
 	out = malloc(total + 1);
 	close(fildes);
-	open("numbers.dict", O_RDONLY);
+	if (i == 1)
+		open(name_file, O_RDONLY);
+	else
+	{
+		open("numbers.dict", O_RDONLY);
+	}
 	read(fildes, out, total + 1);
 	out[total + 2] = 0;
 	return (out);
 }
 
-char	*ft_get_name_num(char *dict, int nb)
+char	*ft_na_nu(char *dict, int nb)
 {
 	int	i;
 
@@ -69,4 +74,20 @@ char	*ft_get_name_num(char *dict, int nb)
 		i++;
 	}
 	return (NULL);
+}
+
+int	ft_cheak(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (!(str[i] >= '0' && str[i] <= '9'))
+		{
+			return (0);
+		}
+        i++;
+    }
+    return (1);
 }
